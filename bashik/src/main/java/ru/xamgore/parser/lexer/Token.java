@@ -24,6 +24,7 @@ public final class Token {
 
   public String getText() {
     return text;
+//    return text.isEmpty() ? "''" : text;
   }
 
   public void setText(String text) {
