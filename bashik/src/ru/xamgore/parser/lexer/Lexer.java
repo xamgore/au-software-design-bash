@@ -1,4 +1,4 @@
-package ru.xamgore.parser;
+package ru.xamgore.parser.lexer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
  */
 public final class Lexer {
 
-  private static final String OPERATORS = "|";
+  private static final String OPERATORS_CHARS = "|=";
 
   private final List<Token> tokens;
   private final String input;
@@ -24,11 +24,14 @@ public final class Lexer {
     tokens = new ArrayList<>();
   }
 
+  /**
+   * Split the initial line onto list of tokens.
+   */
   public List<Token> tokenize() {
     while (pos < len) {
       final char ch = peek(0);
 
-      if (OPERATORS.indexOf(ch) != -1) {
+      if (OPERATORS_CHARS.indexOf(ch) != -1) {
         tokenizeOperator();
       } else if (ch == '"' || ch == '\'') {
         tokenizeQuotedWord();
@@ -44,24 +47,28 @@ public final class Lexer {
 
   private void tokenizeOperator() {
     char ch = peek(0);
-    if (ch == '|') addToken(TokenType.PIPE);
+    if (ch == '|') addToken(TokenType.PIPE, ch);
+    if (ch == '=') addToken(TokenType.ASSIGN, ch);
     next();
   }
 
   private void tokenizeWord() {
     final StringBuilder buf = new StringBuilder();
+    final int startPos = pos;
 
     char ch = peek(0);
-    while (" |\t\'\"\0".indexOf(ch) == -1) {
+    while (" =|\t\'\"\0".indexOf(ch) == -1) {
       buf.append(ch);
       ch = next();
     }
 
-    addToken(TokenType.WORD, buf.toString());
+    addToken(TokenType.WORD, buf.toString(), startPos);
   }
 
   private void tokenizeQuotedWord() {
     final StringBuilder buf = new StringBuilder();
+    final int startPos = pos;
+
     char quote = peek(0);
     char ch = next();
 
@@ -76,10 +83,10 @@ public final class Lexer {
       ch = next();
     }
 
-    next(); // skip closing quote
+    next(); // skip the closing quote
 
     TokenType type = (quote == '"') ? TokenType.DQUOTED : TokenType.SQUOTED;
-    addToken(type, buf.toString());
+    addToken(type, buf.toString(), startPos);
   }
 
   private char peek(int relativePosition) {
@@ -93,12 +100,12 @@ public final class Lexer {
     return peek(0);
   }
 
-  private void addToken(TokenType type) {
-    addToken(type, "");
+  private void addToken(TokenType type, char ch) {
+    tokens.add(new Token(type, "" + ch, pos, pos));
   }
 
-  private void addToken(TokenType type, String text) {
-    tokens.add(new Token(type, text, pos));
+  private void addToken(TokenType type, String text, int startPos) {
+    tokens.add(new Token(type, text, startPos, pos - 1));
   }
 
   private LexerException error(String msg) {
