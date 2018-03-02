@@ -8,6 +8,7 @@ import ru.xamgore.parser.visitors.ExecutorVisitor;
 import ru.xamgore.parser.visitors.StringsConcater;
 import ru.xamgore.parser.visitors.VariableInterpolator;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -16,7 +17,7 @@ public class Repl {
   private final Map<String, String> env;
 
   public Repl(Map<String, String> env) {
-    this.env = env;
+    this.env = new HashMap<>(env);
   }
 
   public void process(String line) {
