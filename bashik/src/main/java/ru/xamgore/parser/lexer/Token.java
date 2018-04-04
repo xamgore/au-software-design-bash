@@ -39,10 +39,6 @@ public final class Token {
     return endCol;
   }
 
-//  public int length() {
-//    return
-//  }
-
   public String position() {
     return "[" + startCol + "]";
   }

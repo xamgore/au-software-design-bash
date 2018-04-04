@@ -14,11 +14,6 @@ public class PipeSequence implements Statement {
   }
 
   @Override
-  public void execute() {
-
-  }
-
-  @Override
   public void accept(Visitor visitor) {
     visitor.visit(this);
   }

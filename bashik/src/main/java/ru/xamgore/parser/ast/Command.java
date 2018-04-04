@@ -16,11 +16,6 @@ public class Command implements Statement {
   }
 
   @Override
-  public void execute() {
-
-  }
-
-  @Override
   public String toString() {
     return cmd.getText() + " " + args.toString();
   }

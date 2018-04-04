@@ -2,6 +2,12 @@ package ru.xamgore.tasks.Commands;
 
 import ru.xamgore.tasks.Task;
 
+
+/**
+ * Assign is a wrapper for "var=value" command.
+ * It takes no input and generates no output.
+ * Can be used inside a sequence of pipes.
+ */
 public class Assign extends Task {
 
   private final String varName;

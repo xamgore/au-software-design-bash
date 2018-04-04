@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO description
+ * Lexer takes an input string and splits it onto
+ * tokens: words, quoted phrases, pipes and equality signs.
  */
 public final class Lexer {
 

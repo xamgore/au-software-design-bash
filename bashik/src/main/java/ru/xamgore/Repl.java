@@ -46,8 +46,9 @@ public class Repl {
 
     while (true) {
       System.out.print("> ");
-      if (input.hasNextLine())
-        process(input.nextLine());
+      if (!input.hasNextLine())
+        break;
+      process(input.nextLine());
     }
   }
 

@@ -28,7 +28,7 @@ public class Parser {
     size = tokens.size();
 
     if (size == 0)
-      throw new RuntimeException("Tokens list must be non-empty");
+      throw new RuntimeException("List of tokens must be non-empty");
   }
 
   public Statement parse() {

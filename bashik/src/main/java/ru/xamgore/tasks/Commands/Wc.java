@@ -6,11 +6,17 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+
+/**
+ * Wc counts: lines, words, bytes of the
+ * input stream or the file (its name must be
+ * passed as an argument).
+ */
 public class Wc extends Task {
 
   @Override
   public int exec() {
-    String in = i;
+    String in = stdin;
     try {
       if (args.length > 0)
         in = new String(Files.readAllBytes(Paths.get(args[0])));
@@ -22,7 +28,7 @@ public class Wc extends Task {
     int wordsCount = in.split("\\s+").length;
     int bytesCount = in.length();
 
-    o = bytesCount + "\t" + wordsCount + "\t" + linesCount;
+    stdout = bytesCount + "\t" + wordsCount + "\t" + linesCount;
     return 0;
   }
 
